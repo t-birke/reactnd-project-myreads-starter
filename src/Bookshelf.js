@@ -11,7 +11,6 @@ class Bookshelf extends Component {
 
   render() {
     const { books, title, onUpdateShelf } = this.props
-    console.log('bookshelf books',books)
     return (
       <div className="bookshelf">
         <h2 className="bookshelf-title">{title}</h2>
