@@ -103,6 +103,12 @@ body, .app {
   padding: 80px 10px 20px;
 }
 
+.search-books-error {
+  color: #f00;
+  font-weight: 400;
+  font-size: 1.5em;
+}
+
 /* books grid */
 
 .books-grid {
