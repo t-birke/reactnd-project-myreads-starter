@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Bookshelf from './Bookshelf'
 
@@ -23,7 +23,9 @@ class BookSearch extends React.Component {
   }
   render() {
     const { query } = this.state
-    const { books, onUpdateShelf, onType, error } = this.props
+    const { onUpdateShelf, error } = this.props
+    let { books } = this.props
+    query.length < 3 && (books = [])
     return (
           <div className="search-books">
             <div className="search-books-bar">

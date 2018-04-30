@@ -1,9 +1,9 @@
 import React from 'react'
+import { Route, Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
-import './App.css'
 import Bookshelf from './Bookshelf'
 import BookSearch from './BookSearch'
-import { Route, Link } from 'react-router-dom'
+import './App.css'
 
 class BooksApp extends React.Component {
   state = {
@@ -29,8 +29,8 @@ class BooksApp extends React.Component {
   }
   updateShelf = (book, shelf) => {
     this.setState((currentState) => {
-        const books = currentState.myBooks
-        book.shelf === 'none' && (books.push(book))
+        let books = currentState.myBooks
+        book.shelf === 'none' && (books = books.concat([book]))
         return {myBooks: books.map((b) => {
         b.id === book.id && (b.shelf = shelf)
         return b})}
@@ -38,24 +38,24 @@ class BooksApp extends React.Component {
     BooksAPI.update(book, shelf)
   }
   addShelfInfo = (result) => {
-    result.map((book) => {
+    return result.map((book) => {
       let shelf = 'none'
       for(let b of this.state.myBooks){
         book.id === b.id && (shelf = b.shelf)
       }
       book.shelf = shelf
+      return book
     })
   }
   searchBooks = (query) => {
     BooksAPI.search(query)
       .then((bookSearchResult) => {
-        //this.addShelfInfo(bookSearchResult)
         bookSearchResult.error ? (this.setState(() => ({
           error : 'no books found'
         }))) :
         (
           this.setState(() => ({
-          bookSearchResult,
+          bookSearchResult: this.addShelfInfo(bookSearchResult),
           error : false
         })
           )
